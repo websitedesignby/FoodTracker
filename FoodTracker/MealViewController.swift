@@ -30,6 +30,10 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate {
         
         // Handle the text field's user input through delegate callbacks.
         nameTextField.delegate = self
+        
+        // Enable the Save button only if the text field has a valid Meal name.
+        checkValidMealName()
+        
     }
 
     // MARK: UITextFieldDelegate
@@ -41,7 +45,19 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField, reason: UITextFieldDidEndEditingReason) {
-        
+        checkValidMealName()
+        navigationItem.title = textField.text
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField){
+        // Disable the Save button while editing
+        saveButton .isEnabled = false;
+    }
+    
+    func checkValidMealName(){
+        // Disable the Save button if the text field is empty.
+        let text = nameTextField.text ?? ""
+        saveButton.isEnabled = !text.isEmpty
     }
     
     // MARK: UIImagePickerControllerDelegate
@@ -74,12 +90,15 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     }
     
     // MARK: Navigation
+    @IBAction func cancel(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
     
     // This method lets you configure a view controller before it's presented.
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if saveButton === sender as! UIBarButtonItem{
-            print("saveButton was the sender.")
+           //  print("saveButton was the sender.")
             let name = nameTextField.text ?? ""
             let photo = photoImageView.image
             let rating = ratingControl.rating

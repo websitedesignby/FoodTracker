@@ -123,14 +123,13 @@ class MealTableViewController: UITableViewController {
     
     @IBAction func unwindToMealList(sender: UIStoryboardSegue){
         
-        print("called unwindToMealList")
+        // print("called unwindToMealList")
         print(sender.source)
         
         if let sourceViewController = sender.source as? MealViewController{
-            print("okay")
+            // print("okay")
             if let meal = sourceViewController.meal{
-                    print(meal)
-  
+                // print(meal) <FoodTracker.MealViewController: 0x141e2a2a0>
                 let newIndexPath = IndexPath(row: meals.count, section: 0)
                 meals.append(meal)
                 tableView.insertRows(at: [newIndexPath], with: .bottom)
